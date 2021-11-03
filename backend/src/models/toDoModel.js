@@ -15,7 +15,7 @@ const createTasks = async ({ task, statusTask }) => {
   return createTask;
 };
 
-const getAllByid = async ({ id }) => {
+const getByid = async ({ id }) => {
   if (!ObjectId.isValid(id)) {
     return null;
   }
@@ -51,7 +51,7 @@ const deleteTask = async ({ id }) => {
 module.exports = {
   getAll,
   createTasks,
-  getAllByid,
+  getByid,
   updateTask,
   deleteTask,
 };
