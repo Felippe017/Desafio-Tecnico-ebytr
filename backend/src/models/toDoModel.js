@@ -11,7 +11,7 @@ const getAll = async () => {
 const createTasks = async ({ task, statusTask }) => {
   const tasksCollection = await connection();
   const dbTasks = await tasksCollection.collection('toDo');
-  const createTask = await dbTasks.insertOne({ task, statusTask });
+  const createTask = await dbTasks.insertOne({ task, statusTask, dateCreated: new Date() });
   return createTask;
 };
 
@@ -29,8 +29,8 @@ const updateTask = async ({ task, statusTask }, id) => {
   if (!ObjectId.isValid(id)) return null;
 
   const tasksCollection = await connection();
-  const dbTasks = tasksCollection.collection('toDo');
-  const tasksUpdate = dbTasks.updateOne({ _id: ObjectId(id) },
+  const dbTasks = await tasksCollection.collection('toDo');
+  const tasksUpdate = await dbTasks.updateOne({ _id: ObjectId(id) },
     {
       $set: { task, statusTask },
     });
@@ -38,9 +38,20 @@ const updateTask = async ({ task, statusTask }, id) => {
   return tasksUpdate;
 };
 
+const deleteTask = async ({ id }) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const tasksCollection = await connection();
+  const dbTasks = await tasksCollection.collection('toDo');
+  const taskDeleted = await dbTasks.deleteOne({ _id: ObjectId(id) });
+
+  return taskDeleted;
+};
+
 module.exports = {
   getAll,
   createTasks,
   getAllByid,
   updateTask,
+  deleteTask,
 };
