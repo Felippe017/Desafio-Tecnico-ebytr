@@ -17,20 +17,20 @@ const getAllTasks = async (_req, res) => {
 };
 
 const getByIdTask = async (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
   const tasks = await getByid({ id });
   return res.status(StatusCodes.OK).json(tasks);
 };
 
 const updatedTask = async (req, res) => {
   const { task, statusTask } = req.body;
-  const id = req.params;
+  const { id } = req.params;
   const tasks = await updateTask({ task, statusTask }, id);
   return res.status(StatusCodes.OK).json(tasks);
 };
 
 const deletedTask = async (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
   const tasks = await deleteTask({ id });
   return res.status(StatusCodes.OK).json(tasks);
 };
