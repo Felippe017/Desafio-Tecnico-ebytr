@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const { createTasks } = require('../models/toDoModel');
+const { createTasks, getAll } = require('../models/toDoModel');
 
 const createTask = async (req, res) => {
   const { task, statusTask } = req.body;
@@ -9,6 +9,12 @@ const createTask = async (req, res) => {
   return res.status(StatusCodes.CREATED).json({ tasks });
 };
 
+const getAllTasks = async (req, res) => {
+  const tasks = await getAll();
+  return res.status(StatusCodes.OK).json({ tasks });
+};
+
 module.exports = {
   createTask,
+  getAllTasks,
 };
