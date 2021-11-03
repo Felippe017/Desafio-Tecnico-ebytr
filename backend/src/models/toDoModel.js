@@ -7,13 +7,14 @@ const getAll = async () => {
   return tasks;
 };
 
-/* const createTasks = async () => {
-    const tasksCollection = await connection();
-    const dbTasks = await tasksCollection.collection('toDo');
-
-}; */
+const createTasks = async ({ task }) => {
+  const tasksCollection = await connection();
+  const dbTasks = await tasksCollection.collection('toDo');
+  const createTask = await dbTasks.insertOne({ task });
+  return createTask;
+};
 
 module.exports = {
   getAll,
-  /* createTasks, */
+  createTasks,
 };
