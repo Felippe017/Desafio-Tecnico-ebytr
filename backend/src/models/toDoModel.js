@@ -11,8 +11,10 @@ const getAll = async () => {
 const createTasks = async ({ task, statusTask }) => {
   const tasksCollection = await connection();
   const dbTasks = await tasksCollection.collection('toDo');
-  const createTask = await dbTasks.insertOne({ task, statusTask, dateCreated: new Date() });
-  return createTask;
+  const { _id } = await dbTasks.insertOne({ task, statusTask, dateCreated: new Date() });
+  return {
+    _id, task, statusTask,
+  };
 };
 
 const getByid = async ({ id }) => {
@@ -30,12 +32,14 @@ const updateTask = async ({ task, statusTask }, id) => {
 
   const tasksCollection = await connection();
   const dbTasks = await tasksCollection.collection('toDo');
-  const tasksUpdate = await dbTasks.updateOne({ _id: ObjectId(id) },
+  await dbTasks.updateOne({ _id: ObjectId(id) },
     {
       $set: { task, statusTask },
     });
 
-  return tasksUpdate;
+  return {
+    task, statusTask,
+  };
 };
 
 const deleteTask = async ({ id }) => {
