@@ -8,7 +8,7 @@ const createTask = async (req, res) => {
 
   const tasks = await createTasks({ task, statusTask });
 
-  return res.status(StatusCodes.CREATED).json({ tasks });
+  return res.status(StatusCodes.CREATED).json(tasks);
 };
 
 const getAllTasks = async (_req, res) => {
@@ -25,14 +25,16 @@ const getByIdTask = async (req, res) => {
 const updatedTask = async (req, res) => {
   const { task, statusTask } = req.body;
   const { id } = req.params;
-  const tasks = await updateTask({ task, statusTask }, id);
-  return res.status(StatusCodes.OK).json(tasks);
+  await updateTask({ task, statusTask }, id);
+  return res.status(StatusCodes.OK).json({ _id: id, task, statusTask });
 };
 
 const deletedTask = async (req, res) => {
   const { id } = req.params;
-  const tasks = await deleteTask({ id });
-  return res.status(StatusCodes.OK).json(tasks);
+  await deleteTask({ id });
+  return res.status(StatusCodes.OK).json({
+    message: 'task deletado com sucesso!',
+  });
 };
 
 module.exports = {
