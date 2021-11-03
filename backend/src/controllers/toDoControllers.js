@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const {
-  createTasks, getAll, getByid, updateTask,
+  createTasks, getAll, getByid, updateTask, deleteTask,
 } = require('../models/toDoModel');
 
 const createTask = async (req, res) => {
@@ -29,9 +29,16 @@ const updatedTask = async (req, res) => {
   return res.status(StatusCodes.OK).json(tasks);
 };
 
+const deletedTask = async (req, res) => {
+  const id = req.params;
+  const tasks = await deleteTask({ id });
+  return res.status(StatusCodes.OK).json(tasks);
+};
+
 module.exports = {
   createTask,
   getAllTasks,
   getByIdTask,
   updatedTask,
+  deletedTask,
 };
