@@ -1,13 +1,18 @@
 const express = require('express');
+const {
+  createTask, getAllTasks, getByIdTask, deletedTask, updatedTask,
+} = require('../controllers/toDoControllers');
 
 const router = express.Router();
 
-router.post('/');
+router.post('/', createTask);
 
-router.get('/');
+router.get('/:id', getByIdTask);
 
-router.put('/:id');
+router.get('/', getAllTasks);
 
-router.delete('/:id');
+router.put('/:id', updatedTask);
+
+router.delete('/:id', deletedTask);
 
 module.exports = router;
