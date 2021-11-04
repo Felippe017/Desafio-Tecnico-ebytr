@@ -1,5 +1,7 @@
 const Joi = require('joi');
+const { ObjectId } = require('mongodb');
 const { StatusCodes } = require('http-status-codes');
+const { getByid } = require('../models/toDoModel');
 
 const taskValidations = (task, statusTask) => {
   const { error } = Joi.object(
@@ -20,4 +22,24 @@ const taskValidations = (task, statusTask) => {
   return true;
 };
 
-module.exports = { taskValidations };
+const taskValidationsId = async ({ id }) => {
+  if (!ObjectId.isValid(id)) {
+    return {
+      message: 'invalid id',
+      code: StatusCodes.NOT_FOUND,
+    };
+  }
+
+  const existTask = await getByid({ id });
+
+  if (!existTask) {
+    return {
+      message: 'this task not exist',
+      code: StatusCodes.NOT_FOUND,
+    };
+  }
+
+  return true;
+};
+
+module.exports = { taskValidations, taskValidationsId };
