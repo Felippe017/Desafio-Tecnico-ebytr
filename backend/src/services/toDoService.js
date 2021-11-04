@@ -1,8 +1,8 @@
 const {
-/*  getByid,  */updateTask, deleteTask, createTasks,
+  getByid, updateTask, deleteTask, createTasks,
 } = require('../models/toDoModel');
 
-const { taskValidations } = require('../validations/validationsTasks');
+const { taskValidations, taskValidationsId } = require('../validations/validationsTasks');
 
 const createTaskService = async ({ task, statusTask }) => {
   const validations = taskValidations(task, statusTask);
@@ -18,11 +18,20 @@ const createTaskService = async ({ task, statusTask }) => {
   return tasks;
 };
 
-/* const getByIdTaskService = async ({ id }) => {
+const getByIdTaskService = async ({ id }) => {
+  const validateId = await taskValidationsId({ id });
+
+  if (validateId.message) {
+    return {
+      message: validateId.message,
+      code: validateId.code,
+    };
+  }
+
   const tasks = await getByid({ id });
   return tasks;
 };
- */
+
 const updatedTaskService = async ({ task, statusTask }, id) => {
   const validations = taskValidations({ task, statusTask });
 
@@ -43,7 +52,7 @@ const deletedTaskService = async ({ id }) => {
 
 module.exports = {
   createTaskService,
-  /* getByIdTaskService, */
+  getByIdTaskService,
   updatedTaskService,
   deletedTaskService,
 };
