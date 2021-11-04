@@ -33,7 +33,16 @@ const getByIdTaskService = async ({ id }) => {
 };
 
 const updatedTaskService = async ({ task, statusTask }, id) => {
-  const validations = taskValidations({ task, statusTask });
+  const validateId = await taskValidationsId({ id });
+
+  if (validateId.message) {
+    return {
+      message: validateId.message,
+      code: validateId.code,
+    };
+  }
+
+  const validations = taskValidations(task, statusTask);
 
   if (validations.message) {
     return {
