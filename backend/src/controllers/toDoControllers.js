@@ -1,9 +1,9 @@
 const { StatusCodes } = require('http-status-codes');
 const {
-  /* createTasks,  */getAll, getByid, updateTask, deleteTask,
+  /* createTasks,  */getAll, /*  getByid, */ updateTask, deleteTask,
 } = require('../models/toDoModel');
 
-const { createTaskService } = require('../services/toDoService');
+const { createTaskService, getByIdTaskService } = require('../services/toDoService');
 
 const createTask = async (req, res) => {
   const { task, statusTask } = req.body;
@@ -26,7 +26,15 @@ const getAllTasks = async (_req, res) => {
 
 const getByIdTask = async (req, res) => {
   const { id } = req.params;
-  const tasks = await getByid({ id });
+  const tasks = await getByIdTaskService({ id });
+  /* getByid({ id }); */
+
+  if (tasks.message) {
+    return res.status(tasks.code).json({
+      message: tasks.message,
+    });
+  }
+
   return res.status(StatusCodes.OK).json(tasks);
 };
 
