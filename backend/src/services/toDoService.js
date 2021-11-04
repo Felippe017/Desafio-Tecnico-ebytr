@@ -56,7 +56,16 @@ const updatedTaskService = async ({ task, statusTask }, id) => {
 };
 
 const deletedTaskService = async ({ id }) => {
-  await deleteTask({ id });
+  const validateId = await taskValidationsId({ id });
+
+  if (validateId.message) {
+    return {
+      message: validateId.message,
+      code: validateId.code,
+    };
+  }
+
+  return deleteTask({ id });
 };
 
 module.exports = {
