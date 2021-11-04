@@ -40,7 +40,6 @@ const updatedTask = async (req, res) => {
   const { id } = req.params;
 
   const taskId = await updatedTaskService({ task, statusTask }, id);
-  /* updateTask({ task, statusTask }, id); */
   if (taskId.message) {
     return res.status(taskId.code).json({
       message: taskId.message,
