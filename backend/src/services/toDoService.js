@@ -18,11 +18,6 @@ const createTaskService = async ({ task, statusTask }) => {
   return tasks;
 };
 
-/* const getAllTasksService = async (_req, res) => {
-  const tasks = await getAll();
-  return res.status(StatusCodes.OK).json(tasks);
-}; */
-
 /* const getByIdTaskService = async ({ id }) => {
   const tasks = await getByid({ id });
   return tasks;
@@ -48,8 +43,7 @@ const deletedTaskService = async ({ id }) => {
 
 module.exports = {
   createTaskService,
-  /*   getAllTasksService,
-  getByIdTaskService, */
+  /* getByIdTaskService, */
   updatedTaskService,
   deletedTaskService,
 };
