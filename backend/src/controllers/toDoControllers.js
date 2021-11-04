@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const { getAll/* , deleteTask  */ } = require('../models/toDoModel');
+const { getAll } = require('../models/toDoModel');
 
 const {
   createTaskService, getByIdTaskService, updatedTaskService, deletedTaskService,
@@ -60,7 +60,7 @@ const deletedTask = async (req, res) => {
       message: deleteTask.message,
     });
   }
-  /*  await deleteTask({ id }); */
+
   return res.status(StatusCodes.OK).json({
     message: 'task deletado com sucesso!',
   });
